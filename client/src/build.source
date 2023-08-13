@@ -1,0 +1,6 @@
+pyinstaller -F client.py
+rm build -r
+
+mv ./dist/client ./
+rm client.spec
+rmdir ./dist

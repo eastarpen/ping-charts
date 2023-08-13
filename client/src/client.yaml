@@ -1,0 +1,17 @@
+name: machine
+serverId: 1
+passw: password
+uploadUrl: url
+targets:
+- id: 1
+  name: chinanet
+  port: 80
+  addr: ct.tz.cloudcpp.com
+- id: 2
+  name: chinaunicom
+  port: 80
+  addr: cu.tz.cloudcpp.com
+- id: 3
+  name: chinamobile
+  port: 80
+  addr: cm.tz.cloudcpp.com
