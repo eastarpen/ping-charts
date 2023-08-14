@@ -12,7 +12,7 @@ MAX_ENTRIES = 250
 TABLE_NAME = "pingdata"
 CREATE_TABLE_SQL = """CREATE TABLE %s (
                       id INTEGER PRIMARY KEY,
-                      serverId INTEGER NOT NULL,
+                      clientId INTEGER NOT NULL,
                       targetId INTEGER NOT NULL,
                       time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                       loss FLOAT NOT NULL,
@@ -21,13 +21,13 @@ CREATE_TABLE_SQL = """CREATE TABLE %s (
 )
 
 INSERT_ENTRY_SQL = """ INSERT INTO %s
-                       ('serverId', 'targetId', 'time', 'loss', 'delay')
+                       ('clientId', 'targetId', 'time', 'loss', 'delay')
                        VALUES(?,?,?,?,?);""" % (
     TABLE_NAME
 )
 
-QUERY_ENTRY_SQL = """SELECT serverId, targetId, time, loss, delay FROM %s
-                     WHERE time > ? AND serverId = ? AND targetId = ?;""" % (
+QUERY_ENTRY_SQL = """SELECT clientId, targetId, time, loss, delay FROM %s
+                     WHERE time > ? AND clientId = ? AND targetId = ?;""" % (
     TABLE_NAME
 )
 
@@ -37,13 +37,13 @@ DELETE_OLD_DATA_SQL = """DELETE FROM %s where time < ?;""" % (TABLE_NAME)
 class entry:
     def __init__(
         self,
-        serverId: int,
+        clientId: int,
         targetId: int,
         time: datetime.datetime,
         loss: float,
         delay: float,
     ) -> None:
-        self.serverId = serverId
+        self.clientId = clientId
         self.targetId = targetId
         self.time = time
         self.loss = loss
@@ -93,7 +93,7 @@ def insert_entries(
 
     try:
         with get_connection() as con:
-            data = [(e.serverId, e.targetId, e.time, e.loss, e.delay) for e in entries]
+            data = [(e.clientId, e.targetId, e.time, e.loss, e.delay) for e in entries]
             con.executemany(INSERT_ENTRY_SQL, data)
     except sqlite3.Error as error:
         print("Error while working with SQLite", error)
@@ -105,11 +105,11 @@ def insert_entry(
     insert_entries([entry])
 
 
-def query_entries(timestamp: datetime.datetime, serverId: int, targetId: int):
+def query_entries(timestamp: datetime.datetime, clientId: int, targetId: int):
     res = []
     try:
         with get_connection() as con:
-            records = con.execute(QUERY_ENTRY_SQL, (timestamp, serverId, targetId)).fetchall()
+            records = con.execute(QUERY_ENTRY_SQL, (timestamp, clientId, targetId)).fetchall()
             step = math.ceil(len(records) / MAX_ENTRIES)
             res = [entry(*r) for idx, r in enumerate(records) if idx % step == 0]
     except sqlite3.Error as error:

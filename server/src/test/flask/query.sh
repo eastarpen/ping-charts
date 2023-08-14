@@ -1,4 +1,4 @@
 #!/bin/bash
 
 
-curl  http://localhost:5000/data/?min=1
+curl  http://localhost:8000/data/?min=1

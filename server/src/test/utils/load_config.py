@@ -2,16 +2,16 @@
 
 import sys
 
-lib_path = "/home/eastarpen/dev/ping-long-time/server-backend/src/lib"
-path = "/home/eastarpen/dev/ping-long-time/server-backend/src/data"
+path = "../../"
 
-sys.path.append(lib_path)
+sys.path.append(path)
 
-config_file = "/home/eastarpen/dev/ping-long-time/server-backend/src/data/config.yaml"
+from lib import utils
 
-import utils
+
 
 if __name__ == "__main__":
+    config_file = "../../data/config.yaml"
     targets, servers = utils.load_config(config_file)
     print(targets)
     print(servers)

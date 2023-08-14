@@ -7,28 +7,30 @@ import logging
 from lib import database as db
 from lib import utils, respentity
 
-targets, servers = None, None
+targets, clients = None, None
 targetList = None
 
 app = Flask(__name__)
 
 
 @app.route("/data", methods=["GET"])
-def getChartDta():
+def getChartData():
     min = request.args.get("min")
 
-    assert min and min.isdigit()
+    if not min or not min.isdigit():
+        logging.info("request param min error")
+        return "", 500
 
     time = utils.calculate_time(int(min))
     rows = []
-    for server_dict in servers:
-        serverDataList = []
+    for client_dict in clients:
+        clientDataList = []
         for target_dict in targets:
-            targetId, serverId = target_dict["id"], server_dict["id"]
-            entries = db.query_entries(time, serverId, targetId)
-            serverDataList.append(utils.dbentries_to_chartData(entries))
+            targetId, clientId = target_dict["id"], client_dict["id"]
+            entries = db.query_entries(time, clientId, targetId)
+            clientDataList.append(utils.dbentries_to_chartData(entries))
         rows.append(
-            respentity.row(server_dict["name"], server_dict["label"], serverDataList)
+            respentity.row(client_dict["name"], client_dict["label"], clientDataList)
         )
 
     resp = respentity.response(targetList, rows)
@@ -38,14 +40,14 @@ def getChartDta():
 
 def check_reqeust(d: dict):
     # check keys
-    if "serverId" not in d or "name" not in d or "passw" not in d or "data" not in d:
+    if "clientId" not in d or "name" not in d or "passw" not in d or "data" not in d:
         logging.info("json data format error")
         return None
-    for server_dict in servers:
-        # check server name and password and id
-        if server_dict["id"] != d["serverId"]:
+    for client_dict in clients:
+        # check client name and password and id
+        if client_dict["id"] != d["clientId"]:
             continue
-        if server_dict["name"] != d["name"] or server_dict["pass"] != d["passw"]:
+        if client_dict["name"] != d["name"] or client_dict["pass"] != d["passw"]:
             logging.info("auth failed")
             return None
         res = []
@@ -56,7 +58,7 @@ def check_reqeust(d: dict):
                     if tar["id"] != data["id"] or tar["name"] != data["name"]:
                         continue
                     entry = db.entry(
-                        d["serverId"],
+                        d["clientId"],
                         tar["id"],
                         data["time"],
                         data["loss"],
@@ -77,7 +79,11 @@ def uploadData():
     data = check_reqeust(data)
     if not data:
         return "err", 400
-    db.insert_entries(data)
+    try:
+        db.insert_entries(data)
+    except Exception:
+        logging.error('insert error')
+        return "err", 500
     return ""
 
 
@@ -103,7 +109,7 @@ def root():
     "--port",
     "-p",
     default=8000,
-    help="Server port, 8000 defaulted",
+    help="client port, 8000 defaulted",
 )
 @click.option(
     "--local",
@@ -123,7 +129,7 @@ def server(
     local: bool,
     debug: bool,
 ):
-    """Ping Charts server"""
+    """Ping Charts client"""
     # init logging
     logging_level = logging.DEBUG if debug else logging.INFO
     utils.init_logging(logging_level)
@@ -132,8 +138,8 @@ def server(
         logging.error("config file not exist")
         return
 
-    global targets, servers, targetList, app
-    targets, servers = utils.load_config(config)
+    global targets, clients, targetList, app
+    targets, clients = utils.load_config(config)
 
     targetList = [e["name"] for e in targets]
 

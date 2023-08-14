@@ -4,7 +4,7 @@ import datetime
 import random
 import sys
 
-path = "/home/eastarpen/dev/ping-long-time/server-backend/src"
+path = "../../" # src directory
 
 sys.path.append(path)
 
@@ -24,7 +24,7 @@ def insert_large(start):
     db.insert_entries(ls)
 
 if __name__ == "__main__":
-    path = "/home/eastarpen/dev/ping-long-time/server-backend/src" + '/data'
+    path = path + 'data'
     db.init_db(path=path)
     timestamp = datetime.datetime(2022,1,1,0,0,0)
     insert_large(timestamp)

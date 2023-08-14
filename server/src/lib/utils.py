@@ -11,7 +11,7 @@ def load_config(path):
 
     with open(path, "r") as f:
         res = yaml.load(f, Loader=yaml.FullLoader)
-        return res["targets"], res["servers"]
+        return res["targets"], res["clients"]
 
 
 def calculate_time(min: int) -> datetime.datetime:

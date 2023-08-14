@@ -1,6 +1,1 @@
-pyinstaller -F client.py
-rm build -r
-
-mv ./dist/client ./
-rm client.spec
-rmdir ./dist
+pyinstaller -F ping-charts-client.py && rm build -r && mv ./dist/ping-charts-client ./ && rm ping-charts-client.spec && rmdir ./dist

@@ -11,7 +11,7 @@ import yaml
 
 CONFIG_KEYS = [
     "name",
-    "serverId",
+    "clientId",
     "passw",
     "uploadUrl",
     "targets",
@@ -23,7 +23,7 @@ TARGET_KEYS = [
     "addr",
 ]
 
-serverId = None
+clientId = None
 passw = None
 name = None
 tars = None
@@ -47,7 +47,7 @@ def load_config(config_file: str):
             if key not in tar:
                 raise Exception("target missing key: " + key)
     return (
-        conf["serverId"],
+        conf["clientId"],
         conf["passw"],
         conf["name"],
         conf["uploadUrl"],
@@ -91,7 +91,7 @@ def send_request(data: dict, upload_url: str):
 
 def generate_data(count: int, timeout: float):
     d = {
-        "serverId": serverId,
+        "clientId": clientId,
         "passw": passw,
         "name": name,
     }
@@ -121,7 +121,7 @@ def generate_data(count: int, timeout: float):
     "--timeout",
     "-t",
     default=0.5,
-    help="time that judged as package loss, 0.5s defaulted",
+    help="time that judged as package loss, 0.5s defaulted. The unit is seconds.",
 )
 @click.option(
     "--package",
@@ -131,8 +131,8 @@ def generate_data(count: int, timeout: float):
 )
 def client(config, timeout, package):
     """Ping Charts client."""
-    global serverId, passw, name, tars
-    serverId, passw, name, upload_url, tars = load_config(config)
+    global clientId, passw, name, tars
+    clientId, passw, name, upload_url, tars = load_config(config)
     data = generate_data(package, timeout)
     send_request(data, upload_url)
 
