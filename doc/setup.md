@@ -14,8 +14,8 @@ To quickly and easily set up this project with the default configuration, you ca
 After executing the script, follow these steps:
 
 1. Rewrite the '/opt/ping-charts/client.yaml' file with your server configuration.
-2. Run the command `systemctl start pingChartsClient` to start the client. This will ping your targets and upload data to the server once a minute.
-3. If desired, run the command `systemctl enable pingChartsClient` to make the client start automatically after the OS reboot.
+2. Run the command `systemctl start pingChartsClient.timer` to start the client. This will ping your targets and upload data to the server once a minute.
+3. If desired, run the command `systemctl enable pingChartsClient.timer` to make the client start automatically after the OS reboot.
 
 **Attention:**
 - If you do not change the service configuration file, the client configuration file must be named 'client.yaml'.

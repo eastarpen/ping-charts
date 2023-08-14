@@ -6,6 +6,12 @@ I just put something I think which are useful here.
 
 If you have any questions, please open an issue.
 
+## "Compile"
+
+1. run web-ui/build.sh to package WEBUI;
+2. source or run build.source under server/src/ or client/src/;
+3. pay attention to the relative path.
+
 ## Server && Client
 
 Nothing complex, just see the code.

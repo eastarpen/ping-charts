@@ -5,8 +5,8 @@ A simple tool to visualize delays of VPS using Python Flask and Vue.
 ## Screenshots
 
 <details>
-<summary>Short</summary>
-![](./img/short.png)
+<summary>General</summary>
+![](./img/general.png)
 </details>
 
 <details>
@@ -84,6 +84,7 @@ I want to keep implementing these two functions if many people need.
 
 - [ ] Delete old data (see test/../delete_old_data.py)
 - [ ] Auto manage clientId and targetId
+- [ ] Scroll table border radius
 
 ## Thanks
 

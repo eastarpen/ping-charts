@@ -3,6 +3,7 @@ Description="Run Ping Charts client every minute"
 
 [Timer]
 OnUnitActiveSec=60s
+onActiveSec=0s
 Unit=pingChartsClient.service
 
 [Install]

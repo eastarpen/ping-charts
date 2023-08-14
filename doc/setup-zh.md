@@ -14,8 +14,8 @@
 执行脚本后，请按照以下步骤操作：
 
 1. 根据你的服务器配置重写'/opt/ping-charts/client.yaml'文件。
-2. 运行命令`systemctl start pingChartsClient`启动客户端。这将每分钟对你的目标进行ping并将数据上传到服务器。
-3. 如果需要，运行命令`systemctl enable pingChartsClient`以使客户端在操作系统重新启动后自动启动。
+2. 运行命令`systemctl start pingChartsClient.timer`启动客户端。这将每分钟对你的目标进行ping并将数据上传到服务器。
+3. 如果需要，运行命令`systemctl enable pingChartsClient.timer`以使客户端在操作系统重新启动后自动启动。
 
 **注意事项：**
 - 如果你不更改服务配置文件，则客户端配置文件必须命名为'client.yaml'。

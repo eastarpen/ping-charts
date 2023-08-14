@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/opt/ping-charts
-ExecStart=/opt/ping-charts/client
+ExecStart=/opt/ping-charts/ping-charts-client
 
 [Install]
 WantedBy=multi-user.target
