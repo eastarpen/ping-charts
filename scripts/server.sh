@@ -9,11 +9,11 @@ fi
 
 mkdir -p /opt/ping-charts && cd /opt/ping-charts
 
-wget -O /opt/ping-charts/ping-charts-server 'server url'
-wget -O /opt/ping-charts/server.yaml 'server config url'
-wget -O '/etc/systemd/system/pingChartsServer.service' 'client service url'
+wget -O /opt/ping-charts/ping-charts-server 'https://github.com/eastarpen/ping-charts/releases/download/v1.0.0.0/ping-charts-server'
+wget -O /opt/ping-charts/server.yaml 'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/server.yaml'
+wget -O '/etc/systemd/system/pingChartsServer.service' 'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/pingChartsServer.service'
 
 echo 'Ping Charts server has been downloaded.'
-echo 'After configure, run the following commands:'
+echo 'After configuration, run the following commands:'
 echo 'sudo systemctl enable pingChartsServer'
 echo 'sudo systemctl start pingChartsServer'
