@@ -1,5 +1,7 @@
 # Quick Setup
 
+**Work fine under Debian, not test other OS**
+
 To quickly and easily set up this project with the default configuration, you can use the provided one-click scripts. However, it is recommended to read the documentation before proceeding.
 
 ## Client

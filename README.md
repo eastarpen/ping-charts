@@ -1,17 +1,19 @@
 # Ping Charts
 
+![tittle](./img/tittle.png)
+
 A simple tool to visualize delays of VPS using Python Flask and Vue.
 
 ## Screenshots
 
 <details>
 <summary>General</summary>
-![](./img/general.png)
+<img src='./img/general.png' />
 </details>
 
 <details>
 <summary>Scroll</summary>
-![](./img/scroll.png)
+<img src='./img/scroll.png'/>
 </details>
 
 ## Usage
@@ -28,6 +30,8 @@ For Chinese users: [配置说明](./doc/configuration-zh.md).
 
 ### Using compiled executable file
 
+**Work fine under Debian, donot test other OS**
+
 Just prepare the configuration files and download the executable file from [release](https://github.com/ping-charts/ping-charts/releases), then execute it.
 
 Run `client --help` and `server --help` to see available CLI options.
@@ -38,7 +42,7 @@ Run `client --help` and `server --help` to see available CLI options.
 
 - Install dependencies in "requirements.ext" under client/ and server/.
 - Prepare the configuration file (both server side and client side).
-- Run the command `python client.py --help` or `python ping-charts.py --help`.
+- Run the command `python ping-charts-client.py --help` or `python ping-charts-server.py --help`.
 
 **Web-UI**
 
@@ -80,7 +84,7 @@ PRs are welcomed.
 
 **TODO**
 
-I want to keep implementing these two functions if many people need.
+I want to keep implementing these functions if many people need.
 
 - [ ] Delete old data (see test/../delete_old_data.py)
 - [ ] Auto manage clientId and targetId
