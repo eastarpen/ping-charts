@@ -1,19 +1,25 @@
+
+<p align="center">
+    <img src="./img/tittle.png" />
+</p>
+
 # Ping Charts
-
-![tittle](./img/tittle.png)
-
 A simple tool to visualize delays of VPS using Python Flask and Vue.
 
 ## Screenshots
 
 <details>
 <summary>General</summary>
-<img src='./img/general.png' />
+<p align="center">
+    <img src='./img/general.png' />
+</p>
 </details>
 
 <details>
 <summary>Scroll</summary>
-<img src='./img/scroll.png'/>
+<p align="center">
+    <img src='./img/scroll.png'/>
+</p>
 </details>
 
 ## Usage
