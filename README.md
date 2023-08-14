@@ -32,9 +32,9 @@ For Chinese users: [配置说明](./doc/configuration-zh.md).
 
 **Work fine under Debian, donot test other OS**
 
-Just prepare the configuration files and download the executable file from [release](https://github.com/ping-charts/ping-charts/releases), then execute it.
+Just prepare the configuration files and download the executable file from [releases](https://github.com/ping-charts/ping-charts/releases) page, then execute it.
 
-Run `client --help` and `server --help` to see available CLI options.
+Run `ping-charts-client --help` and `ping-charts-server --help` to see available CLI options.
 
 ### Using source code
 
