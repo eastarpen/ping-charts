@@ -1,0 +1,11 @@
+[Unit]
+Description=Ping-Charts Server
+Documentation=https://github.com/eastarpen/ping-charts
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/ping-charts
+ExecStart=/opt/ping-charts/server
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,24 @@
+targets:
+  - name: chinanet
+    id: 1
+  - name: chinaunicom
+    id: 2
+  - name: chinamobile
+    id: 3
+clients:
+  - name: client
+    label: US
+    pass: password
+    id: 1
+  - name: clienta
+    label: HK
+    pass: password
+    id: 2
+  - name: clientb
+    label: TW
+    pass: password
+    id: 3
+  - name: clientd
+    label: FR
+    pass: password
+    id: 4

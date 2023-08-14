@@ -1,0 +1,9 @@
+[Unit]
+Description="Run Ping Charts client every minute"
+
+[Timer]
+OnUnitActiveSec=60s
+Unit=pingChartsClient.service
+
+[Install]
+WantedBy=multi-user.target
