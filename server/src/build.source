@@ -1,7 +1,1 @@
-pyinstaller -F --add-data 'templates:templates' --add-data 'static:static' ping-chart.py 
-
-rm -r ./build
-
-mv ./dist/ping-chart ./
-rm ping-chart.spec
-rmdir ./dist/
+pyinstaller -F --add-data 'templates:templates' --add-data 'static:static' ping-charts.py  && rm -r ./build && mv ./dist/ping-charts ./ && rm ping-charts.spec && rmdir ./dist/

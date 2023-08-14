@@ -4,7 +4,7 @@
         @option-selected="changeLevel" />
     <radio-com :initModel="min" :uid="minUid" :items="minItems" :info="minInfo" :initSelect="3"
         @option-selected="changeMin" />
-    <div style="overflow-x: auto; max-width: 1200px; margin:auto;">
+    <div class="overflow-box">
         <table class="content-table" v-if="isTableVisible">
             <thead>
                 <tr>

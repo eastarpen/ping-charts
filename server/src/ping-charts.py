@@ -90,8 +90,8 @@ def root():
 @click.option(
     "--config",
     "-c",
-    default="./config.yaml",
-    help="YAML config file path, default './config.yaml'",
+    default="./server.yaml",
+    help="YAML config file path, default './server.yaml'",
 )
 @click.option(
     "--data",

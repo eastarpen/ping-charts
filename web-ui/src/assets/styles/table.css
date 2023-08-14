@@ -3,14 +3,22 @@
     font-family: sans-serif;
 }
 
+.overflow-box {
+    overflow-x: auto;
+    min-width: 800px;
+    max-width: 1200px;
+    border-radius: 5px 5px 0 0;
+    margin: auto;
+}
+
 .content-table {
     border-collapse: collapse;
     margin: auto;
     font-size: 0.9em;
     min-width: 400px;
     text-align: center;
+    overflow: hidden;
     border-radius: 5px 5px 0 0;
-    /* overflow: hidden; */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
