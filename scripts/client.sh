@@ -2,19 +2,51 @@
 
 set -e
 
+green_output() {
+    echo -e "\033[32m$1\033[0m"
+}
+
+red_output() {
+    echo -e "\033[31m$1\033[0m"
+}
+
+file_not_exist() {
+    if [ -e "$1" ]; then
+        red_output "File '$1' exist."
+        return 1;
+    fi
+}
+
 if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run with root permission."
+    red_output "This script must be run with root permission."
     exit 1
 fi
 
 mkdir -p /opt/ping-charts && cd /opt/ping-charts
 
-wget -O /opt/ping-charts/ping-charts-client 'https://github.com/eastarpen/ping-charts/releases/download/v1.0.0.0/ping-charts-client'
-wget -O /opt/ping-charts/client.yaml 'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/client.yaml'
-wget -O '/etc/systemd/system/pingChartsClient.service' 'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/pingChartsClient.service'
-wget -O '/etc/systemd/system/pingChartsClient.timer' 'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/pingChartsClient.timer'
+FILES=(
+    '/opt/ping-charts/ping-charts-client' # make sure this file is executable
+    '/opt/ping-charts/client.yaml'
+    '/etc/systemd/system/pingChartsClient.service'
+    '/etc/systemd/system/pingChartsClient.timer'
+)
+URLS=(
+    'https://github.com/eastarpen/ping-charts/releases/download/v1.0.0.0/ping-charts-client'
+    'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/client.yaml'
+    'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/pingChartsClient.service'
+    'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/pingChartsClient.timer'
+)
 
-echo 'Ping Charts client has been downloaded.'
-echo 'After configuration, run the following commands:'
-echo 'sudo systemctl start pingChartsClient.timer'
-echo 'sudo systemctl enable pingChartsClient.timer'
+for index in "${!FILES[@]}"; do
+    file=${FILES[$index]}
+    if  file_not_exist "$file" ; then
+        wget -O "$file" "${URLS[$index]}"
+    fi
+done
+
+chmod +x "${FILES[0]}"
+
+green_output 'Ping Charts client has been downloaded.'
+green_output 'After configuration, run the following commands:'
+green_output 'sudo systemctl start pingChartsClient.timer'
+green_output 'sudo systemctl enable pingChartsClient.timer'
