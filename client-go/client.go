@@ -5,26 +5,26 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/sirupsen/logrus"
+	"gopkg.in/yaml.v3"
 	"io"
 	"net"
 	"net/http"
 	"os"
 	"reflect"
 	"time"
-	"github.com/sirupsen/logrus"
-	"gopkg.in/yaml.v3"
 )
 
 var (
-    configFile = flag.String("config", "client.yaml", "Client config file, required")
-    timeout    = flag.Int("timeout", 500, "Timeout, in milliseconds")
-    pack       = flag.Int("pack", 10, "How many packets to send")
+	configFile = flag.String("c", "client.yaml", "Client config file.")
+	timeout    = flag.Int("t", 500, "Timeout, in milliseconds.")
+	pack       = flag.Int("p", 10, "How many packets to send in one test.")
 	clientID   int
 	passw      string
 	name       string
 	log        *logrus.Logger
 
-	tars         []Target
+	tars       []Target
 	configKeys = []string{
 		"name",
 		"clientId",
@@ -38,22 +38,21 @@ var (
 		"port",
 		"addr",
 	}
-
 )
 
 type Config struct {
 	Name      string   `yaml:"name" validate:"required"`
-    ClientID  int      `yaml:"clientId" validate:"required"`
-    Passw     string   `yaml:"passw" validate:"required"`
-    UploadURL string   `yaml:"uploadUrl" validate:"required"`
-    Targets   []Target `yaml:"targets" validate:"required"`
+	ClientID  int      `yaml:"clientId" validate:"required"`
+	Passw     string   `yaml:"passw" validate:"required"`
+	UploadURL string   `yaml:"uploadUrl" validate:"required"`
+	Targets   []Target `yaml:"targets" validate:"required"`
 }
 
 type Target struct {
-    ID   int    `yaml:"id" validate:"required"`
-    Name string `yaml:"name" validate:"required"`
-    Port int    `yaml:"port" validate:"required"`
-    Addr string `yaml:"addr" validate:"required"`
+	ID   int    `yaml:"id" validate:"required"`
+	Name string `yaml:"name" validate:"required"`
+	Port int    `yaml:"port" validate:"required"`
+	Addr string `yaml:"addr" validate:"required"`
 }
 
 type Data struct {
@@ -80,20 +79,20 @@ func loadConfig(configFile string) (Config, error) {
 		return conf, err
 	}
 
-	if err := yaml.Unmarshal(data, &conf,); err != nil {
+	if err := yaml.Unmarshal(data, &conf); err != nil {
 		return conf, err
 	}
 
-    // check keys
-    if err := validateStruct(conf, "Config"); err != nil {
-        return conf, err
-    }
+	// check keys
+	if err := validateStruct(conf, "Config"); err != nil {
+		return conf, err
+	}
 
-    for _, value := range conf.Targets {
-        if err := validateStruct(value, "Target"); err != nil {
-            return conf, err
-        }
-    }
+	for _, value := range conf.Targets {
+		if err := validateStruct(value, "Target"); err != nil {
+			return conf, err
+		}
+	}
 
 	return conf, nil
 }
@@ -144,13 +143,13 @@ func sendRequest(data Data, uploadURL string) error {
 	if err != nil {
 		return fmt.Errorf("%v", err)
 	}
-    defer resp.Body.Close()
+	defer resp.Body.Close()
 
-    respData, err := io.ReadAll(resp.Body)
-    if err != nil {
-        return fmt.Errorf("Can not parse server response: %v", err)
-    }
-    log.Infof("Server response: %s", string(respData))
+	respData, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("Can not parse server response: %v", err)
+	}
+	log.Infof("Server response: %s", string(respData))
 
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("Request failed with status code: %d", resp.StatusCode)
@@ -190,8 +189,8 @@ func validateStruct(s interface{}, name string) error {
 		field := value.Field(i)
 		tag := value.Type().Field(i).Tag.Get("validate")
 		if tag == "required" && field.IsZero() {
-            yamlTag := value.Type().Field(i).Tag.Get("yaml")
-            return fmt.Errorf("%s lack required field: \"%s\".", name, yamlTag)
+			yamlTag := value.Type().Field(i).Tag.Get("yaml")
+			return fmt.Errorf("%s lack required field: \"%s\".", name, yamlTag)
 		}
 	}
 	return nil
@@ -206,11 +205,11 @@ func main() {
 		TimestampFormat: "2006-01-02 15:04:05",
 	})
 
-    flag.Parse()
+	flag.Parse()
 
 	conf, err := loadConfig(*configFile)
 	if err != nil {
-        log.Error(err)
+		log.Error(err)
 		return
 	}
 
@@ -222,7 +221,7 @@ func main() {
 	data := generateData(10, 500*time.Millisecond)
 	err = sendRequest(data, conf.UploadURL)
 	if err != nil {
-		log.Info(err)
+		log.Error(err)
 		return
 	}
 }
