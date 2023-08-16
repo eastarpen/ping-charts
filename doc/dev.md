@@ -8,9 +8,15 @@ If you have any questions, please open an issue.
 
 ## "Compile"
 
+**Server python**
+
 1. run web-ui/build.sh to package WEBUI;
-2. source or run build.source under server/src/ or client/src/;
+2. source or run build.source under server/src/;
 3. pay attention to the relative path.
+
+**Client Golang**
+
+Under client-go, run `go build`
 
 ## Server && Client
 
@@ -24,6 +30,6 @@ Nothing complex, just see the code.
 
 - If you want debug it.
 
-  * Set environment variable `env='env'`, see [readme](../README.md#Using source code]
+  * Set environment variable `env='env'`, see [readme](../README.md#Using source code)
   * Under `test-data` directory, create a json format file named 'data'(Just rename one of the data files already exist under that directory), then using `python3 -m http.server 8081` to export that file.  
     For more information, see "vue.config.js".

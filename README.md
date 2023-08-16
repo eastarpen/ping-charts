@@ -96,6 +96,8 @@ I want to keep implementing these functions if many people need.
 - [ ] Auto manage clientId and targetId
 - [ ] Scroll table border radius
 
+[Some information](./doc/dev.md).
+
 ## Thanks
 
 - [Title style comes from here](https://codepen.io/jakestuts/pen/AEMqEM)
