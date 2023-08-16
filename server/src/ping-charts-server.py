@@ -18,8 +18,8 @@ def getChartData():
     min = request.args.get("min")
 
     if not min or not min.isdigit():
-        logging.info("request param min error")
-        return "", 500
+        logging.info("Request param min error")
+        return "Bad Request", 400
 
     time = utils.calculate_time(int(min))
     rows = []
@@ -40,16 +40,14 @@ def getChartData():
 
 def check_reqeust(d: dict):
     # check keys
-    if "clientId" not in d or "name" not in d or "passw" not in d or "data" not in d:
-        logging.info("json data format error")
-        return None
+    if not d or "clientId" not in d or "name" not in d or "passw" not in d or "data" not in d:
+        return "Request data format error", 400
     for client_dict in clients:
         # check client name and password and id
         if client_dict["id"] != d["clientId"]:
             continue
         if client_dict["name"] != d["name"] or client_dict["pass"] != d["passw"]:
-            logging.info("auth failed")
-            return None
+            return "Auth Error", 403
         res = []
         for tar in targets:
             entry = None
@@ -64,27 +62,31 @@ def check_reqeust(d: dict):
                         data["loss"],
                         data["delay"],
                     )
+                    break
                 except KeyError:
-                    logging.info("data format error")
-                    return None
-                break
+                    return ("Target data format error", 400)
             if entry:
                 res.append(entry)
-        return res
+        return res, 200
+    return "Client not found", 400
 
 
 @app.route("/upload", methods=["POST"])
 def uploadData():
-    data = request.get_json()
-    data = check_reqeust(data)
-    if not data:
-        return "err", 400
+    dataDict = request.get_json()
+    if dataDict:
+        name = dataDict.get('name', 'UNKNOW_NAME')
+        id = dataDict.get('clientId', 'UNKNOW_ID')
+    data, status_code = check_reqeust(dataDict)
+    if  status_code != 200:
+        logging.info(f"{name} {id} {data}")
+        return data, status_code
     try:
         db.insert_entries(data)
     except Exception:
-        logging.error('insert error')
-        return "err", 500
-    return ""
+        logging.error(f'{name} {id} Insert error')
+        return "Server Error", 500
+    return "Success", 200
 
 
 @app.get("/")
@@ -109,7 +111,7 @@ def root():
     "--port",
     "-p",
     default=8000,
-    help="client port, 8000 defaulted",
+    help="Service port, 8000 defaulted",
 )
 @click.option(
     "--local",
@@ -129,7 +131,7 @@ def server(
     local: bool,
     debug: bool,
 ):
-    """Ping Charts client"""
+    """Ping Charts server"""
     # init logging
     logging_level = logging.DEBUG if debug else logging.INFO
     utils.init_logging(logging_level)
