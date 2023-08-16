@@ -32,9 +32,9 @@ jobs:
       working-directory: ./scripts/release
       run: |
         ./pre-build.sh
+        ./build-server-py.sh
         ./build-client-go.sh
         ./build-client-py.sh
-        ./build-server-py.sh
 
 
     - name: Publish GitHub Releases
