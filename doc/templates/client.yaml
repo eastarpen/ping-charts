@@ -1,5 +1,5 @@
 name: client
-serverId: 1
+clientId: 1
 passw: password
 uploadUrl: url
 targets:
