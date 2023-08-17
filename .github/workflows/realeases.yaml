@@ -13,7 +13,7 @@ on:
 jobs:
   build-and-publish:
     # https://github.com/actions/setup-python/issues/544
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
     - name: Checkout
