@@ -30,7 +30,7 @@ FILES=(
     '/etc/systemd/system/pingChartsServer.service'
 )
 URLS=(
-    'https://github.com/eastarpen/ping-charts/releases/download/v1.0.0.0/ping-charts-server'
+    'https://github.com/eastarpen/ping-charts/releases/download/v1.1.0/ping-charts-server-python-v1.2.0'
     'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/server.yaml'
     'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/pingChartsServer.service'
 )
