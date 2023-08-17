@@ -1,10 +1,9 @@
 import sqlite3
 import os
-import datetime
 import math
 import logging
 
-from .utils import calculate_time
+from .utils import calculate_timestamp
 
 db_con, db_path = None, None
 
@@ -14,7 +13,7 @@ CREATE_TABLE_SQL = """CREATE TABLE %s (
                       id INTEGER PRIMARY KEY,
                       clientId INTEGER NOT NULL,
                       targetId INTEGER NOT NULL,
-                      time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                      time INTEGER NOT NULL,
                       loss FLOAT NOT NULL,
                       delay FLOAT NOT NULL);""" % (
     TABLE_NAME
@@ -39,7 +38,7 @@ class entry:
         self,
         clientId: int,
         targetId: int,
-        time: datetime.datetime,
+        time: int,
         loss: float,
         delay: float,
     ) -> None:
@@ -67,11 +66,11 @@ def init_db(dbname="pingcharts.db", path="./", createDir=False) -> None:
             table_not_exist = res.fetchone() is None
 
             if table_not_exist:
-                logging.info("create table [%s]" % TABLE_NAME)
+                logging.info("Create table [%s]" % TABLE_NAME)
                 con.execute(CREATE_TABLE_SQL)
 
-    except sqlite3.Error as error:
-        print("Error while working with SQLite", error)
+    except sqlite3.Error:
+        logging.error("Error while init db.")
 
 
 def get_connection():
@@ -96,7 +95,7 @@ def insert_entries(
             data = [(e.clientId, e.targetId, e.time, e.loss, e.delay) for e in entries]
             con.executemany(INSERT_ENTRY_SQL, data)
     except sqlite3.Error as error:
-        print("Error while working with SQLite", error)
+        logging.info("Error while insert entries.", error)
 
 
 def insert_entry(
@@ -105,20 +104,20 @@ def insert_entry(
     insert_entries([entry])
 
 
-def query_entries(timestamp: datetime.datetime, clientId: int, targetId: int):
+def query_entries(timestamp: float, clientId: int, targetId: int):
     res = []
     try:
         with get_connection() as con:
             records = con.execute(QUERY_ENTRY_SQL, (timestamp, clientId, targetId)).fetchall()
             step = math.ceil(len(records) / MAX_ENTRIES)
             res = [entry(*r) for idx, r in enumerate(records) if idx % step == 0]
-    except sqlite3.Error as error:
-        print("Error while working with SQLite", error)
+    except sqlite3.Error:
+        logging.info("Error while query entries.")
     return res
 
 
 def delete_old_data():
-    time = calculate_time(60 * 24 * 30)  # mins
+    time = calculate_timestamp(60 * 24 * 30)  # mins
     try:
         with get_connection() as con:
             con.execute(DELETE_OLD_DATA_SQL, (time,))

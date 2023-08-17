@@ -21,7 +21,7 @@ def getChartData():
         logging.info("Request param min error")
         return "Bad Request", 400
 
-    time = utils.calculate_time(int(min))
+    time = utils.calculate_timestamp(int(min))
     rows = []
     for client_dict in clients:
         clientDataList = []

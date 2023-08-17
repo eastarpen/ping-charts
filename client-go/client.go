@@ -65,7 +65,7 @@ type Data struct {
 type Metrics struct {
 	Name  string  `json:"name"`
 	ID    int     `json:"id"`
-	Time  string  `json:"time"`
+	Time  int64   `json:"time"`
 	Delay float64 `json:"delay"`
 	Loss  float64 `json:"loss"`
 }
@@ -170,7 +170,7 @@ func generateData(count int, timeout time.Duration) Data {
 		res := Metrics{
 			Name: tar.Name,
 			ID:   tar.ID,
-			Time: time.Now().Format("2006-01-02 15:04:05"),
+			Time: time.Now().Unix(),
 		}
 
 		delay, loss := tcping(tar.Addr, tar.Port, count, timeout)

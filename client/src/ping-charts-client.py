@@ -5,7 +5,6 @@ import click
 import socket
 import time
 import statistics
-import datetime
 import yaml
 
 
@@ -86,7 +85,7 @@ def send_request(data: dict, upload_url: str):
     response = requests.post(
         upload_url, data=json_data, headers={"Content-Type": "application/json"}
     )
-    print(response.status_code)
+    print(f"Server response: {response.text}, status code: {response.status_code}")
 
 
 def generate_data(count: int, timeout: float):
@@ -100,7 +99,7 @@ def generate_data(count: int, timeout: float):
         res = {
             "name": tar["name"],
             "id": tar["id"],
-            "time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "time": int(time.time()),
         }
         delay, loss = tcping(tar["addr"], tar["port"], count, timeout)
         res["delay"] = delay

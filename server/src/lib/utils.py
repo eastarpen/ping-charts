@@ -15,8 +15,17 @@ def load_config(path):
 
 
 def calculate_time(min: int) -> datetime.datetime:
+    """
+    Ddeprecated.
+    Using calculate_timestamp to solve timezone problem.
+    """
     return datetime.datetime.now() - datetime.timedelta(minutes=min)
 
+def calculate_timestamp(min: int) -> int:
+    return int(
+                (datetime.datetime.now() - datetime.timedelta(minutes=min))
+                .timestamp()
+            )
 
 def dbentries_to_chartData(entries: list) -> chartData:
     if not entries or len(entries) == 0:
