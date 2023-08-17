@@ -31,7 +31,7 @@ FILES=(
     '/etc/systemd/system/pingChartsClient.timer'
 )
 URLS=(
-    'https://github.com/eastarpen/ping-charts/releases/download/v1.1.0/ping-charts-client-go-v1.2.0'
+    'https://github.com/eastarpen/ping-charts/releases/download/v1.2.0/ping-charts-client-go-v1.2.0'
     'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/client.yaml'
     'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/pingChartsClient.service'
     'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/pingChartsClient.timer'
