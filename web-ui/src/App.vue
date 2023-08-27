@@ -66,9 +66,10 @@ export default {
                 { value: 5, label: "5min" },
                 { value: 30, label: "30min" },
                 { value: 60, label: "1h" },
+                { value: 180, label: "3h" },
                 { value: 1440, label: "1d" },
                 { value: 10080, label: "7d" },
-                { value: 43200, label: "30d" },
+                // { value: 43200, label: "30d" },
             ],
         };
     },
