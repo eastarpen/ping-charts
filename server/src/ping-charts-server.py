@@ -7,6 +7,9 @@ import logging
 from lib import database as db
 from lib import utils, respentity
 
+
+VERSION = "v1.2.0"
+
 targets, clients = None, None
 targetList = None
 
@@ -124,14 +127,24 @@ def root():
     help="Set Log level to DEBUG",
     is_flag=True,
 )
+@click.option(
+    "--version",
+    help="Print version and exit",
+    default=False,
+    is_flag=True,
+)
 def server(
     config: str,
     data: str,
     port: int,
     local: bool,
     debug: bool,
+    version: bool,
 ):
     """Ping Charts server"""
+    if version:
+        print("Ping Charts Server ", VERSION)
+        return
     # init logging
     logging_level = logging.DEBUG if debug else logging.INFO
     utils.init_logging(logging_level)

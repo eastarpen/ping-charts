@@ -8,6 +8,8 @@ import statistics
 import yaml
 
 
+VERSION = "v1.2.0"
+
 CONFIG_KEYS = [
     "name",
     "clientId",
@@ -128,8 +130,17 @@ def generate_data(count: int, timeout: float):
     default=10,
     help="how many packages to send in a test, 10 defaulted",
 )
-def client(config, timeout, package):
+@click.option(
+    "--version",
+    is_flag=True,
+    default=False,
+    help="Print version and exit",
+)
+def client(config, timeout, package, version):
     """Ping Charts client."""
+    if version:
+        print("Ping Charts client " + VERSION)
+        return
     global clientId, passw, name, tars
     clientId, passw, name, upload_url, tars = load_config(config)
     data = generate_data(package, timeout)

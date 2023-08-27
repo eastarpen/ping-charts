@@ -15,10 +15,13 @@ import (
 	"time"
 )
 
+const VERSION = "v1.2.0"
+
 var (
-	configFile = flag.String("c", "client.yaml", "Client config file.")
-	timeout    = flag.Int("t", 500, "Timeout, in milliseconds.")
-	pack       = flag.Int("p", 10, "How many packets to send in one test.")
+	configFile  = flag.String("c", "client.yaml", "Client config file.")
+	timeout     = flag.Int("t", 500, "Timeout, in milliseconds.")
+	pack        = flag.Int("p", 10, "How many packets to send in one test.")
+	showVersion = flag.Bool("version", false, "Show version.")
 	clientID   int
 	passw      string
 	name       string
@@ -197,6 +200,14 @@ func validateStruct(s interface{}, name string) error {
 }
 
 func main() {
+	flag.Parse()
+
+    // show version
+    if *showVersion {
+        fmt.Println("Ping Charts Client " + VERSION)
+        return
+    }
+
 	// TODO logging format
 	// set up logging
 	log = logrus.New()
@@ -205,7 +216,6 @@ func main() {
 		TimestampFormat: "2006-01-02 15:04:05",
 	})
 
-	flag.Parse()
 
 	conf, err := loadConfig(*configFile)
 	if err != nil {
