@@ -52,7 +52,11 @@ Run `ping-charts-client --help` and `ping-charts-server --help` to see available
 
 **Web-UI**
 
-The web static files have been packed into 'static/' and 'templates/' under 'server/src/'. You do not need to run the Web-UI separately in general.
+~~The web static files have been packed into 'static/' and 'templates/' under 'server/src/'. You do not need to run the Web-UI separately in general.~~
+
+Using command `npm run build` to build static files.
+
+If you want to know how releases pack the static files, see [build.sh](./web-ui/build.sh).
 
 Only when you want to change the UI elements (which means you will directly change the source code), you should run the web-ui using Node.js.
 

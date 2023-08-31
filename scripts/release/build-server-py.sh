@@ -5,6 +5,16 @@
 
 set -e
 
+WD="$(pwd)"
+
+# build static web files
+cd ../../web-ui/
+./build.sh
+
+cd "$WD"
+
+# build server
+#
 cd ../../server/src/ || exit
 pip install -r ../requirements.txt
 
