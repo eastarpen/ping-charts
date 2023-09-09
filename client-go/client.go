@@ -204,7 +204,7 @@ func main() {
 
     // show version
     if *showVersion {
-        fmt.Println("Ping Charts Client " + VERSION)
+        fmt.Println("Ping Charts Client-go " + VERSION)
         return
     }
 

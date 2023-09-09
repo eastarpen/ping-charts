@@ -7,8 +7,8 @@ if [ ! -d "../server/src/" ]; then
 fi
 
 npm run build
-rm ../server/src/static/ -r
-rm ../server/src/templates/ -r
+rm ../server/src/static/ -rf
+rm ../server/src/templates/ -rf
 mkdir ../server/src/templates
 mv ./dist/index.html ../server/src/templates/index.html
 mv ./dist/ ../server/src/static/

@@ -137,9 +137,9 @@ def generate_data(count: int, timeout: float):
     help="Print version and exit",
 )
 def client(config, timeout, package, version):
-    """Ping Charts client."""
+    """Ping Charts client(python version)."""
     if version:
-        print("Ping Charts client " + VERSION)
+        print("Ping Charts client-py " + VERSION)
         return
     global clientId, passw, name, tars
     clientId, passw, name, upload_url, tars = load_config(config)
