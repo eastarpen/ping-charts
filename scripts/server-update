@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -e
+
+green_output() {
+    echo -e "\033[32m$1\033[0m"
+}
+
+red_output() {
+    echo -e "\033[31m$1\033[0m"
+}
+
+file_not_exist() {
+    if [ -e "$1" ]; then
+        red_output "File '$1' exist."
+        return 1;
+    fi
+}
+
+if [[ $EUID -ne 0 ]]; then
+    red_output "This script must be run with root permission."
+    exit 1
+fi
+
+CONFIGFILE="/etc/systemd/system/pingChartsServer.service"
+BIN="/opt/ping-charts/ping-charts-server"
+LATESTTAG="v1.2.0"
+
+if  file_not_exist "$CONFIGFILE" ; then
+    red_output "File \"$CONFIGFILE\" not exist."
+    exit 1
+fi
+
+systemctl stop pingChartsServer
+green_output "Stop pingChartsServer"
+sleep 1s
+
+
+wget -O "$BIN" 'https://github.com/eastarpen/ping-charts/releases/latest/download/ping-charts-server-python'
+green_output "Downloaded ping-charts-server-python-${LATESTTAG}"
+
+systemctl daemon-reload
+systemctl start pingChartsServer.service
+systemctl status pingChartsServer.service

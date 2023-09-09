@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-const VERSION = "v1.2.0"
+const VERSION = "v1.2.1"
 
 var (
 	configFile  = flag.String("c", "client.yaml", "Client config file.")

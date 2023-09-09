@@ -8,7 +8,7 @@ import statistics
 import yaml
 
 
-VERSION = "v1.2.0"
+VERSION = "v1.2.1"
 
 CONFIG_KEYS = [
     "name",

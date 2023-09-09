@@ -42,6 +42,10 @@ After executing the script, follow these steps:
 - The server will run on port 8000.
 - The service will listen for requests from '0.0.0.0'.
 
+## Update
+
+Using [client-update](../scripts/client-update) and [server-update](../scripts/server-update) to update client and server to the latest version.
+
 ## Customization
 
 **Before making any changes, ensure that you understand what you are doing.**
