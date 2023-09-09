@@ -141,9 +141,9 @@ def server(
     debug: bool,
     version: bool,
 ):
-    """Ping Charts server"""
+    """Ping Charts server.\nA simple tool to visualize vps latency based on TCP."""
     if version:
-        print("Ping Charts Server ", VERSION)
+        print("Ping Charts Server-py ", VERSION)
         return
     # init logging
     logging_level = logging.DEBUG if debug else logging.INFO

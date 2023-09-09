@@ -205,6 +205,7 @@ func main() {
     // show version
     if *showVersion {
         fmt.Println("Ping Charts Client-go " + VERSION)
+        fmt.Println("A simple tool to visualize vps latency based on TCP.")
         return
     }
 

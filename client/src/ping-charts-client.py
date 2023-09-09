@@ -137,7 +137,7 @@ def generate_data(count: int, timeout: float):
     help="Print version and exit",
 )
 def client(config, timeout, package, version):
-    """Ping Charts client(python version)."""
+    """Ping Charts client(python version).\nA simple tool to visualize vps latency based on TCP."""
     if version:
         print("Ping Charts client-py " + VERSION)
         return
