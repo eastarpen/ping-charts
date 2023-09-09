@@ -6,7 +6,9 @@ if [ ! -d "../server/src/" ]; then
   exit 1
 fi
 
+npm install
 npm run build
+
 rm ../server/src/static/ -rf
 rm ../server/src/templates/ -rf
 mkdir ../server/src/templates
