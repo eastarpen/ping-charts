@@ -35,7 +35,11 @@ export default {
                 },
                 plugins: {
                     legend: { display: false },
-                    tooltip: { enabled: true }
+                    tooltip: {
+                        backgroundColor: "rgba(0, 0, 0, 0)",
+                        titleColor: "black",
+                        enabled: true,
+                    }
                 },
                 animation: true,
             },
