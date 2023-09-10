@@ -1,5 +1,9 @@
+/**
+* Thanks to
+* [Create custom scrollbars using CSS](https://www.youtube.com/watch?v=lvKK2fs6h4I)
+* [How TO - Custom Scrollbar](https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp)
+*/
 * {
-    /* Change your font family */
     font-family: sans-serif;
 }
 
@@ -11,13 +15,44 @@
     margin: auto;
 }
 
+::-webkit-scrollbar {
+  height: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px green;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #009879;
+  border-radius: 10px;
+}
+
+.sticky-left {
+    position: sticky;
+    margin: 0px;
+    padding: 0px;
+    position: -webkit-sticky;
+    left: 0;
+}
+
+thead  .sticky-left {
+    background-color: #009879;
+}
+
+tbody  .sticky-left {
+    background-color: #f3f3f3;
+}
+
 .content-table {
     border-collapse: collapse;
     margin: auto;
     font-size: 0.9em;
     min-width: 400px;
     text-align: center;
-    overflow: hidden;
     border-radius: 5px 5px 0 0;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }

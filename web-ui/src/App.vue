@@ -8,7 +8,7 @@
         <table class="content-table" v-if="isTableVisible">
             <thead>
                 <tr>
-                    <th style="position: sticky; left: 0; background: #009879;"> Name </th>
+                    <th class="sticky-left"> Name </th>
                     <th> Label </th>
                     <th v-for="(target, index) in targets" :key="index">
                         {{ target }}
@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 <tr v-for="(row, index) in rows" :key="index">
-                    <td style="position: sticky; left: 0; background: #f3f3f3;">{{ row.name }}</td>
+                    <td class="sticky-left">{{ row.name }}</td>
                     <td>{{ row.label }}</td>
                     <td v-for="(chartData, index) in row.chartDataList" :key="index" class="chart">
                         <bar-chart :chartData="chartData" :judgeLevel="judgeLevel" />
