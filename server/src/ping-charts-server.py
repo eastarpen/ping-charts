@@ -9,7 +9,7 @@ from lib import database as db
 from lib import utils, respentity
 
 
-VERSION = "v1.2.1"
+VERSION = "v1.2.2"
 
 targets, clients = None, None
 targetList = None
