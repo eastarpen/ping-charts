@@ -1,12 +1,15 @@
 <template>
-    <Bar height="26" :data="data" :options="options" />
-    <span v-if="averageDelay"> {{ averageDelay }}ms</span>
+    <div ref="ele" style="display: inline-block; padding: 0; margin: 0; width: 100%; height: 100%;">
+        <Bar v-if="isInViewport" height="26" :data="data" :options="options" />
+        <span v-if="averageDelay"> {{ averageDelay }}ms</span>
+    </div>
 </template>
 
 <script>
 
 import { max_ping_value, judge_levels, strict_level, lenient_level, much_lenient_level } from '@/constants';
 
+import 'intersection-observer';
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 
@@ -24,9 +27,20 @@ export default {
             required: true
         }
     },
+    mounted() {
+        this.observer = new IntersectionObserver(this.handleIntersection, {
+            rootMargin: '0px',
+            threshold: 0.1
+        });
+
+        this.observer.observe(this.$refs.ele);
+    },
     data() {
         return {
+            observer: null,
+            isInViewport: false,
             options: {
+                // responsive: true,
                 categoryPercentage: 1.0,
                 barPercentage: 1.0,
                 scales: {
@@ -59,6 +73,11 @@ export default {
         }
     },
     methods: {
+        handleIntersection(entries) {
+            if(this.isInViewport) return;
+            const entry = entries[0];
+            this.isInViewport = entry.isIntersecting;
+        },
         timeConverter(UNIX_timestamp) {
             let time = new Date(UNIX_timestamp * 1000);
             let year = time.getFullYear();

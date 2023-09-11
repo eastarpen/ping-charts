@@ -32,6 +32,7 @@
 }
 
 .content-table td.chart {
+    width: 50px;
     padding: 0px 15px;
     padding-top: 5px;
     padding-bottom: 3px;

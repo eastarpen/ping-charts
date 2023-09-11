@@ -1,14 +1,16 @@
 <template>
-    <h1 class="tittle">Ping Charts</h1>
-    <radio-com :initModel="judgeLevel" :uid="levelUid" :items="levelItems" :info="levelInfo"
-        @option-selected="changeLevel" />
-    <radio-com :initModel="min" :uid="minUid" :items="minItems" :info="minInfo" :initSelect="3"
-        @option-selected="changeMin" />
+    <div style="height: 26vh;">
+        <h1 class="tittle">Ping Charts</h1>
+        <radio-com :initModel="judgeLevel" :uid="levelUid" :items="levelItems" :info="levelInfo"
+            @option-selected="changeLevel" />
+        <radio-com :initModel="min" :uid="minUid" :items="minItems" :info="minInfo" :initSelect="3"
+            @option-selected="changeMin" />
+    </div>
     <div class="overflow-box">
         <table class="content-table" v-if="isTableVisible">
-            <thead>
+            <thead class="sticky-top">
                 <tr>
-                    <th class="sticky-left"> Name </th>
+                    <th> Name </th>
                     <th> Label </th>
                     <th v-for="(target, index) in targets" :key="index">
                         {{ target }}
@@ -17,7 +19,7 @@
             </thead>
             <tbody>
                 <tr v-for="(row, index) in rows" :key="index">
-                    <td class="sticky-left">{{ row.name }}</td>
+                    <th>{{ row.name }} </th>
                     <td>{{ row.label }}</td>
                     <td v-for="(chartData, index) in row.chartDataList" :key="index" class="chart">
                         <bar-chart :chartData="chartData" :judgeLevel="judgeLevel" />

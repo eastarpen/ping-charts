@@ -11,6 +11,7 @@
     "axios": "^1.4.0",
     "chart.js": "^4.0.0",
     "core-js": "^3.8.3",
+    "intersection-observer": "^0.12.2",
     "vue": "^3.2.13",
     "vue-chartjs": "^5.2.0"
   },
