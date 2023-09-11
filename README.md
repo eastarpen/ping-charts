@@ -104,6 +104,8 @@ I want to keep implementing these functions if many people need.
 
 ## Thanks
 
+This project is inspired by [ping0.cc](https://ping0.cc/vpsmon/)
+
 - [Title style comes from here](https://codepen.io/jakestuts/pen/AEMqEM)
 - [Table style](https://dcode.domenade.com/tutorials/how-to-style-html-tables-with-css)
 - [Fixed column table](https://stackoverflow.com/questions/15811653/table-with-fixed-header-and-fixed-column-on-pure-css)
