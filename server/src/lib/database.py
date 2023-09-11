@@ -94,8 +94,8 @@ def insert_entries(
         with get_connection() as con:
             data = [(e.clientId, e.targetId, e.time, e.loss, e.delay) for e in entries]
             con.executemany(INSERT_ENTRY_SQL, data)
-    except sqlite3.Error as error:
-        logging.info("Error while insert entries.", error)
+    except sqlite3.Error:
+        logging.error("Error while insert entries.")
 
 
 def insert_entry(
@@ -112,14 +112,14 @@ def query_entries(timestamp: float, clientId: int, targetId: int):
             step = math.ceil(len(records) / MAX_ENTRIES)
             res = [entry(*r) for idx, r in enumerate(records) if idx % step == 0]
     except sqlite3.Error:
-        logging.info("Error while query entries.")
+        logging.error("Error while query entries.")
     return res
 
 
-def delete_old_data():
-    time = calculate_timestamp(60 * 24 * 30)  # mins
+def delete_old_data(day = 7):
+    time = calculate_timestamp(60 * 24 * day)  # mins
     try:
         with get_connection() as con:
             con.execute(DELETE_OLD_DATA_SQL, (time,))
-    except sqlite3.Error as error:
-        print("Error while working with SQLite", error)
+    except sqlite3.Error:
+        logging.error("Error while delete old data.")

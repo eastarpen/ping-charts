@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from flask_apscheduler import APScheduler
 import json
 import click
 import os
@@ -13,7 +14,19 @@ VERSION = "v1.2.1"
 targets, clients = None, None
 targetList = None
 
+
 app = Flask(__name__)
+scheduler = APScheduler()
+
+
+def autoDelete(day: int):
+    scheduler.add_job(
+        id="Scheduled Task",
+        func=lambda: db.delete_old_data(day),
+        trigger="interval",
+        seconds=24 * 60 * 60,
+    )
+    scheduler.start()
 
 
 @app.route("/data", methods=["GET"])
@@ -43,7 +56,13 @@ def getChartData():
 
 def check_reqeust(d: dict):
     # check keys
-    if not d or "clientId" not in d or "name" not in d or "passw" not in d or "data" not in d:
+    if (
+        not d
+        or "clientId" not in d
+        or "name" not in d
+        or "passw" not in d
+        or "data" not in d
+    ):
         return "Request data format error", 400
     for client_dict in clients:
         # check client name and password and id
@@ -78,16 +97,16 @@ def check_reqeust(d: dict):
 def uploadData():
     dataDict = request.get_json()
     if dataDict:
-        name = dataDict.get('name', 'UNKNOW_NAME')
-        id = dataDict.get('clientId', 'UNKNOW_ID')
+        name = dataDict.get("name", "UNKNOW_NAME")
+        id = dataDict.get("clientId", "UNKNOW_ID")
     data, status_code = check_reqeust(dataDict)
-    if  status_code != 200:
+    if status_code != 200:
         logging.info(f"{name} {id} {data}")
         return data, status_code
     try:
         db.insert_entries(data)
     except Exception:
-        logging.error(f'{name} {id} Insert error')
+        logging.error(f"{name} {id} Insert error")
         return "Server Error", 500
     return "Success", 200
 
@@ -117,6 +136,11 @@ def root():
     help="Service port, 8000 defaulted",
 )
 @click.option(
+    "--delete",
+    default=7,
+    help="How long ago should the data be deleted, in days. 7 defaulted.",
+)
+@click.option(
     "--local",
     "-l",
     help="Listen 127.0.0.1 only",
@@ -137,6 +161,7 @@ def server(
     config: str,
     data: str,
     port: int,
+    delete: int,
     local: bool,
     debug: bool,
     version: bool,
@@ -150,7 +175,7 @@ def server(
     utils.init_logging(logging_level)
 
     if not os.path.exists(config):
-        logging.error(f"Config file \"{config}\" not exist")
+        logging.error(f'Config file "{config}" not exist')
         return
 
     global targets, clients, targetList, app
@@ -165,6 +190,9 @@ def server(
     logging.debug(
         f"listen on {host}:{port}, logging level: {logging_level}, data dir: {data}"
     )
+
+    # auto delete old data
+    autoDelete(delete)
 
     app.run(
         port=port,
