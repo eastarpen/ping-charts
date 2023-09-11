@@ -6,7 +6,7 @@
 
 ## 客户端
 
-1. 下载[客户端设置脚本](../scripts/client.sh)并以root权限执行它。
+1. 下载[客户端设置脚本](https://raw.githubusercontent.com/eastarpen/ping-charts/master/scripts/client.sh)并以root权限执行它。
 2. 脚本将执行以下任务：
    - 尝试创建目录"/opt/ping-charts"。
    - 从[releases](https://github.com/eastarpen/ping-charts/releases)页面下载预编译的客户端。
@@ -24,7 +24,7 @@
 
 ## 服务器
 
-1. 下载[服务器设置脚本](../scripts/server.sh)并以root权限执行它。
+1. 下载[服务器设置脚本](https://raw.githubusercontent.com/eastarpen/ping-charts/master/scripts/server.sh)并以root权限执行它。
 2. 脚本将执行以下任务：
    - 尝试创建目录"/opt/ping-charts"。
    - 从[releases](https://github.com/eastarpen/ping-charts/releases)页面下载预编译的服务器。
@@ -42,6 +42,10 @@
 - 如果你不更改服务配置文件，则服务器配置文件必须命名为'server.yaml'。
 - 服务器将在端口8000上运行。
 - 服务将监听来自'0.0.0.0'的请求。
+
+## 更新
+
+如果你使用开发者提供的一键脚本部署本项目, 你可以使用 [server-update](https://raw.githubusercontent.com/eastarpen/ping-charts/master/scripts/server-update) 和 [client-update](https://raw.githubusercontent.com/eastarpen/ping-charts/master/scripts/client-update) 来更新服务器和客户端到最新版本。
 
 ## 自定义
 

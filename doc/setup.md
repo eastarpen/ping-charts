@@ -6,7 +6,7 @@ To quickly and easily set up this project with the default configuration, you ca
 
 ## Client
 
-1. Download the [client setup script](../scripts/client.sh) and execute it with root permission.
+1. Download the [client setup script](https://raw.githubusercontent.com/eastarpen/ping-charts/master/scripts/client.sh) and execute it with root permission.
 2. The script will perform the following tasks:
    - Attempt to create the directory "/opt/ping-charts".
    - Download the pre-compiled client from the [releases](https://github.com/eastarpen/ping-charts/releases) page.
@@ -24,7 +24,7 @@ After executing the script, follow these steps:
 
 ## Server
 
-1. Download the [server setup script](../scripts/server.sh) and execute it with root permission.
+1. Download the [server setup script](https://raw.githubusercontent.com/eastarpen/ping-charts/master/scripts/server.sh) and execute it with root permission.
 2. The script will perform the following tasks:
    - Attempt to create the directory "/opt/ping-charts".
    - Download the pre-compiled server from the [releases](https://github.com/eastarpen/ping-charts/releases) page.
@@ -44,7 +44,7 @@ After executing the script, follow these steps:
 
 ## Update
 
-Using [client-update](../scripts/client-update) and [server-update](../scripts/server-update) to update client and server to the latest version.
+After setting up the project by one-click scripts, you can use [client-update](https://github.com/eastarpen/ping-charts/blob/master/scripts/client-update) and [server-update](https://github.com/eastarpen/ping-charts/blob/master/scripts/server-update) to update client and server to the latest version.
 
 ## Customization
 
