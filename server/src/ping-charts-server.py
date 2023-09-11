@@ -150,13 +150,13 @@ def server(
     utils.init_logging(logging_level)
 
     if not os.path.exists(config):
-        logging.error("config file not exist")
+        logging.error(f"Config file \"{config}\" not exist")
         return
 
     global targets, clients, targetList, app
     targets, clients = utils.load_config(config)
 
-    targetList = [e["name"] for e in targets]
+    targetList = [e["alias"] if "alias" in e else e["name"] for e in targets]
 
     host = "127.0.0.1" if local else "0.0.0.0"
 
