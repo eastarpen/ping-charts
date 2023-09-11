@@ -40,10 +40,15 @@ targets:                    # Targets list
 
 [Server Template](./templates/server.yaml)
 
+Notice that for one target, the name and id in server side and client side should be the same.
+
+Target alias is used to change the target's display name in web page.
+
 ```yaml
 targets:               # Register targets
   - name: chinanet     # Target name (string, allow repeat)
     id: 1              # Target ID (integer, do not allow repeat)
+    alias: china-net   # Not required. If exist, it will show in front-end(instead of the value of name)
   - name: chinaunicom
     id: 2
   - name: chinamobile

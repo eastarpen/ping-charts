@@ -39,10 +39,15 @@ targets:                    # 目标列表
 
 [服务器模板](./templates/server.yaml)
 
+注意对同一个 target, 服务端和客户端的 id 和 name 必须一致.
+
+alias 用来快速更改 target 在前端的显示名称
+
 ```yaml
 targets:               # 注册目标
   - name: chinanet     # 目标名称，字符串，允许重复
     id: 1              # 目标 ID，整数，不允许重复
+    alias: china-net   # 不必填。如果存在,将显示在网页中(忽略name的值)
   - name: chinaunicom
     id: 2
   - name: chinamobile

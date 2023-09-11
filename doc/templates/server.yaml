@@ -1,6 +1,7 @@
 targets:
   - name: chinanet
     id: 1
+    alias: china-net
   - name: chinaunicom
     id: 2
   - name: chinamobile
