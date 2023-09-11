@@ -45,8 +45,8 @@ class entry:
         self.clientId = clientId
         self.targetId = targetId
         self.time = time
-        self.loss = loss
-        self.delay = delay
+        self.loss = round(loss, 2)
+        self.delay = round(delay, 2)
 
 
 def init_db(dbname="pingcharts.db", path="./", createDir=False) -> None:
