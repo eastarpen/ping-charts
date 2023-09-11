@@ -1,60 +1,22 @@
 /**
 * Thanks to
-* [Create custom scrollbars using CSS](https://www.youtube.com/watch?v=lvKK2fs6h4I)
-* [How TO - Custom Scrollbar](https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp)
+* - [Create custom scrollbars using CSS](https://www.youtube.com/watch?v=lvKK2fs6h4I)
+* - [CUSTOM SCROLLBAR MAKER](https://codepen.io/stephenpaton-tech/full/JjRvGmY)
+* - [How to change the color of the bottom right square of the scrollbar in webkit](https://stackoverflow.com/questions/11667890/css-how-to-change-the-color-of-the-bottom-right-square-of-the-scrollbar-in-webk)
+* - [How TO - Custom Scrollbar](https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp)
 */
+
 * {
     font-family: sans-serif;
-}
-
-.overflow-box {
-    overflow-x: auto;
-    min-width: 800px;
-    max-width: 1200px;
-    border-radius: 5px 5px 0 0;
-    margin: auto;
-}
-
-::-webkit-scrollbar {
-  height: 6px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px green;
-  border-radius: 10px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #009879;
-  border-radius: 10px;
-}
-
-.sticky-left {
-    position: sticky;
-    margin: 0px;
-    padding: 0px;
-    position: -webkit-sticky;
-    left: 0;
-}
-
-thead  .sticky-left {
-    background-color: #009879;
-}
-
-tbody  .sticky-left {
-    background-color: #f3f3f3;
 }
 
 .content-table {
     border-collapse: collapse;
     margin: auto;
+    width: 100%;
     font-size: 0.9em;
-    min-width: 400px;
     text-align: center;
     border-radius: 5px 5px 0 0;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 .content-table thead tr {
@@ -85,6 +47,62 @@ tbody  .sticky-left {
     background-color: #f3f3f3;
 }
 
-.content-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+.overflow-box {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    overflow: auto;
+    width: 85vw;
+    height: 73vh;
+    border-radius: 5px 5px 0 0;
+    margin: auto;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+    scrollbar-width: auto;
+    scrollbar-color: #8f54a0 #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgba(205, 247, 209, 0.6);
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #009879;
+    border-radius: 10px;
+    border: 3px solid rgba(205, 247, 209, 0.6);
+}
+
+*::-webkit-scrollbar-corner {
+    background-color: rgba(205, 247, 209, 0.6);
+}
+
+thead th {
+    background-color: #009879;
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    top: 0;
+}
+
+tbody th {
+    position: -webkit-sticky; /* for Safari */
+    background-color: #f3f3f3;
+    position: sticky;
+    left: 0;
+}
+
+thead th:first-child {
+    left: 0;
+    z-index: 1;
+}
+
+tbody th {
+    border-collapse: separate;
 }
