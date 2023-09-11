@@ -26,11 +26,13 @@ mkdir -p /opt/ping-charts && cd /opt/ping-charts
 
 FILES=(
     '/opt/ping-charts/ping-charts-server' # make sure this file is executable.
+    '/opt/ping-charts/server-update.sh'
     '/opt/ping-charts/server.yaml'
     '/etc/systemd/system/pingChartsServer.service'
 )
 URLS=(
     'https://github.com/eastarpen/ping-charts/releases/latest/download/ping-charts-server-python'
+    'https://raw.githubusercontent.com/eastarpen/ping-charts/master/scripts/server-update'
     'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/server.yaml'
     'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/pingChartsServer.service'
 )
@@ -43,6 +45,7 @@ for index in "${!FILES[@]}"; do
 done
 
 chmod +x "${FILES[0]}"
+chmod +x "${FILES[1]}"
 
 green_output 'Ping Charts server has been downloaded.'
 green_output 'After configuration, run the following commands:'

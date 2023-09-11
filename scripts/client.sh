@@ -26,12 +26,14 @@ mkdir -p /opt/ping-charts && cd /opt/ping-charts
 
 FILES=(
     '/opt/ping-charts/ping-charts-client' # make sure this file is executable
+    '/opt/ping-charts/client-update.sh'
     '/opt/ping-charts/client.yaml'
     '/etc/systemd/system/pingChartsClient.service'
     '/etc/systemd/system/pingChartsClient.timer'
 )
 URLS=(
     'https://github.com/eastarpen/ping-charts/releases/latest/download/ping-charts-client-go'
+    'https://raw.githubusercontent.com/eastarpen/ping-charts/master/scripts/client-update'
     'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/client.yaml'
     'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/pingChartsClient.service'
     'https://raw.githubusercontent.com/eastarpen/ping-charts/master/doc/templates/pingChartsClient.timer'
@@ -45,6 +47,7 @@ for index in "${!FILES[@]}"; do
 done
 
 chmod +x "${FILES[0]}"
+chmod +x "${FILES[1]}"
 
 green_output 'Ping Charts client has been downloaded.'
 green_output 'After configuration, run the following commands:'
