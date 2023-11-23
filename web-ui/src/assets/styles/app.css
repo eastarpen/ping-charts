@@ -10,6 +10,10 @@ body {
     /* background-color: #CDF7D1; */
 }
 
+.top {
+    height: 26vh;
+}
+
 .tittle { 
     font-family: 'Amarante', Tahoma, sans-serif;
     font-weight: bold;

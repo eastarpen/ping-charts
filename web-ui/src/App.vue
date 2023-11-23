@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 26vh;">
+    <div class="top">
         <h1 class="tittle">Ping Charts</h1>
         <radio-com :initModel="judgeLevel" :uid="levelUid" :items="levelItems" :info="levelInfo"
             @option-selected="changeLevel" />
