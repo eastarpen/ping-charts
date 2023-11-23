@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-const VERSION = "v1.3.0"
+const VERSION = "v1.3.1"
 
 var (
 	configFile  = flag.String("c", "client.yaml", "Client config file.")
@@ -100,13 +100,38 @@ func loadConfig(configFile string) (Config, error) {
 	return conf, nil
 }
 
-func tcping(host string, port int, count int, timeout time.Duration) (float64, float64) {
+// getIPAddress takes a string parameter 'host', which can be an IP address or domain.
+// If 'host' is a domain, it runs a DNS query and returns the corresponding IP address.
+// If 'host' is an IP address, it returns it directly.
+// If the IP of the domain does not exist, it raises an error.
+func getIPAddress(host string) (string, error) {
+        // Check if host is an IP address.
+        if ip := net.ParseIP(host); ip != nil {
+                return host, nil
+        }
+
+        // If not an IP address, assume it's a domain and do a DNS lookup.
+        IPs, err := net.LookupIP(host)
+        if err != nil {
+                return "", fmt.Errorf("unable to resolve domain or invalid IP address: %s", host)
+        }
+
+        // Return the first resolved IP address as a string.
+        return IPs[0].String(), nil
+}
+
+func tcping(host string, port int, count int, timeout time.Duration) (float64, float64, error) {
 	delays := make([]float64, 0)
 	lostPackets := 0
 
+    ip, err := getIPAddress(host)
+    if err != nil {
+        return 0, 0, err
+    }
+
 	for i := 0; i < count; i++ {
 		startTime := time.Now()
-		conn, err := net.DialTimeout("tcp", fmt.Sprintf("%s:%d", host, port), timeout)
+		conn, err := net.DialTimeout("tcp", fmt.Sprintf("%s:%d", ip, port), timeout)
 		if err != nil {
 			lostPackets++
 			continue
@@ -121,7 +146,7 @@ func tcping(host string, port int, count int, timeout time.Duration) (float64, f
 	avgDelay := calculateAvgDelay(delays)
 	packetLoss := float64(lostPackets) / float64(count)
 
-	return avgDelay, packetLoss
+	return avgDelay, packetLoss, nil
 }
 
 func calculateAvgDelay(delays []float64) float64 {
@@ -161,7 +186,7 @@ func sendRequest(data Data, uploadURL string) error {
 	return nil
 }
 
-func generateData(count int, timeout time.Duration) Data {
+func generateData(count int, timeout time.Duration) (Data, error) {
 	data := Data{
 		ClientID: clientID,
 		Passw:    passw,
@@ -176,14 +201,17 @@ func generateData(count int, timeout time.Duration) Data {
 			Time: time.Now().Unix(),
 		}
 
-		delay, loss := tcping(tar.Addr, tar.Port, count, timeout)
+		delay, loss, err := tcping(tar.Addr, tar.Port, count, timeout)
+        if err != nil {
+            return data, err
+        }
 		res.Delay = delay
 		res.Loss = loss
 
 		data.Data = append(data.Data, res)
 	}
 
-	return data
+	return data, nil
 }
 
 func validateStruct(s interface{}, name string) error {
@@ -229,7 +257,11 @@ func main() {
 	name = conf.Name
 	tars = conf.Targets
 
-	data := generateData(10, 500*time.Millisecond)
+	data, err := generateData(10, 500*time.Millisecond)
+	if err != nil {
+		log.Error(err)
+		return
+	}
 	err = sendRequest(data, conf.UploadURL)
 	if err != nil {
 		log.Error(err)

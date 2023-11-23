@@ -3,12 +3,13 @@ import os
 import requests
 import click
 import socket
+import ipaddress
 import time
 import statistics
 import yaml
 
 
-VERSION = "v1.3.0"
+VERSION = "v1.3.1"
 
 CONFIG_KEYS = [
     "name",
@@ -56,9 +57,22 @@ def load_config(config_file: str):
     )
 
 
+def get_ip_address(host):
+    try:
+        # Check if host is already a valid IP address
+        ipaddress.ip_address(host)
+        return host
+    except ValueError:
+        # If not, perform a DNS lookup
+        try:
+            return socket.gethostbyname(host)
+        except socket.gaierror:
+            raise Exception(f"Unable to resolve domain or invalid IP address: {host}")
+
 def tcping(host, port=80, count=10, timeout=0.5):
     delays = []
     lost_packets = 0
+    ip = get_ip_address(host)
 
     for _ in range(count):
         try:
@@ -66,7 +80,7 @@ def tcping(host, port=80, count=10, timeout=0.5):
             sock.settimeout(timeout)
 
             start_time = time.time()
-            sock.connect((host, port))
+            sock.connect((ip, port))
             end_time = time.time()
 
             delay = end_time - start_time
